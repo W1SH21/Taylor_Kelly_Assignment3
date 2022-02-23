@@ -13,7 +13,7 @@ class DoublyLinkedList {
 private:
   NodeType<T> *head;
   NodeType<T> *tail;
-
+  int size;
 public:
 
   DoublyLinkedList(); //post: list is created
