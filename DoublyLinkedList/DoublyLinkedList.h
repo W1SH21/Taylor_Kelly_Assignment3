@@ -14,17 +14,19 @@ private:
   NodeType<T> *head;
   NodeType<T> *tail;
   int size;
+  int length;
+
 public:
 
   DoublyLinkedList(); //post: list is created
   ~DoublyLinkedList(); //pre: list is created, post: all nodes freed
-
+  
   void insertItem(T &item);
   void deleteItem(T &item);
-  void lengthIs() const; //pre: list exists, post: returns the lenght
+  int lengthIs() const; //pre: list exists, post: returns the lenght
   void print(); //prints list to stdout
   void printReverse(); //prints list to stdout in reverse
-  
-} //DoublyLinkedList<>
+  void printElem(); 
+}; //DoublyLinkedList<>
   
 #endif
