@@ -7,7 +7,7 @@ template<class T>
 DoublyLinkedList<T>::DoublyLinkedList() {
   head = NULL;
   tail = NULL;
-  size = 0;
+  length = 0;
 } //DoublyLinkedList
 
 
@@ -31,13 +31,11 @@ void DoublyLinkedList<T>::insertItem(T &item) {
     head = newNode;
     tail = newNode;
     newNode->next = NULL;
-    cout << "add0" << endl;
     length++;
   } else if (temp->data >= item) {
     newNode->next = head;
     newNode->next->back = newNode;
     head = newNode;
-    cout << "add1" << endl;
     length++;
   } else {
     
@@ -53,7 +51,6 @@ void DoublyLinkedList<T>::insertItem(T &item) {
     } //if
     temp->next = newNode;
     newNode->back = temp;
-    cout << "add2" << endl;
     length++;
   } //if
 } //insertItem
@@ -109,6 +106,126 @@ template<class T>
 void DoublyLinkedList<T>::printElem() {
   cout << tail->data << endl;
 }//printElem
+
+template<class T>
+void DoublyLinkedList<T>::deleteSubsection(int lbound, int ubound) {
+  if (head == NULL || ubound < 0 || ubound > length - 1 || lbound < 0 || lbound > length - 1) {
+    cout << "Invalid Range" << endl;
+  } else {
+    NodeType<T>* lowerBound = head;
+    NodeType<T>* upperBound = tail;
+
+    for (int i = 0; i < lbound; i++) {
+      lowerBound = lowerBound->next;
+    } //for
+
+    cout << lowerBound->data << endl;;
+      
+    for (int i = length - 1; i > ubound; i--) {
+      upperBound = upperBound->back;
+    } //for
+
+    cout << upperBound->data << endl;
+    
+    if (lbound != 0 && ubound != length - 1) {
+
+      upperBound->next->back = lowerBound->back;
+      lowerBound->back->next = upperBound->next;
+
+      //frees all deleted nodes (re-uses upperBound to hold the addresses of nodes to be deleted)
+      for (int i = lbound; i < ubound; i++) {
+        upperBound = lowerBound;
+	lowerBound = lowerBound->next;
+	delete [] upperBound;
+      } //for
+      
+    } else {
+      
+      if (ubound == length - 1 && lbound == 0) {
+	head = NULL;
+	tail = NULL;
+      } else if (ubound == length - 1) {
+	tail = lowerBound->back;
+	lowerBound->back->next = NULL;
+	
+	for (int i = lbound; i < ubound; i ++) {
+	  upperBound = lowerBound;
+	  lowerBound = lowerBound->next;
+	  delete[] upperBound;
+	} //for
+	
+      } else if (lbound == 0) {
+	head = upperBound->next;
+
+	for (int i = lbound; i < ubound; i++) {
+	  upperBound = lowerBound;
+	  lowerBound = lowerBound->next;
+	  delete[] upperBound;
+	} //for
+      } //if
+    } //if
+  } //if
+} //deleteSubsection
+
+template<class T>
+T DoublyLinkedList<T>::getMode() {
+  NodeType<T>* temp = head;
+  int appearances = 1;
+  NodeType<T>* modeRef;
+  
+  while (temp->next != NULL) {
+
+    if (temp->data == temp->next->data) {
+      appearances++;
+      temp = temp->next;
+    } else {
+      appearances = 1;
+      modeRef = temp->back;
+      temp = temp->next;
+    } //if
+  } //while
+
+  return modeRef->data;
+} //getMode
+
+template<class T>
+void DoublyLinkedList<T>::swapAlternate() {
+  if (head == NULL || head->next == NULL) {
+    return;
+  } //if
+
+  //used two iterators to make implementation simpler and more legible (however it is possible with 1)
+  NodeType<T>* temp = head;
+  NodeType<T>* tempNext = head->next;
+  bool reachedEnd = false;
+
+  tempNext->next->back = temp;
+  temp->next = tempNext->next;
+  tempNext->back = NULL;
+  temp->back = tempNext;
+  tempNext->next = temp;
+  head = tempNext;
+  
+  while (!reachedEnd) {
+
+    if ((tempNext->next->next->next != NULL) && !reachedEnd) {
+      tempNext = tempNext->next->next->next;
+      temp = temp->next;
+    } else {
+      reachedEnd = true;
+    } //if
+    
+    if (tempNext->next->next == NULL) {
+      reachedEnd = true;
+    } //if
+    temp->back->next = tempNext;
+    tempNext->next->back = temp;
+    temp->next = tempNext->next;
+    tempNext->back = temp->back;
+    temp->back = tempNext;
+    tempNext->next = temp;  
+  } //while
+} //swapAlternate
 
 template class DoublyLinkedList<int>;
 template class DoublyLinkedList<float>;

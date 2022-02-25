@@ -5,18 +5,28 @@ using namespace std;
 
 int main() {
 
-  int i = 10;
-  int j = 11;
-  int k = 9;
+  int i = 0;
+  int j = 1;
+  int k = 2;
+  int l = 3;
+  int m = 4;
+  int n = 5;
+  int o = 6;
+  int p = 7;
+  int q = 8;
   DoublyLinkedList<int> list = DoublyLinkedList<int>();  
   list.insertItem(i);
   list.insertItem(j);
   list.insertItem(k);
-
-  list.deleteItem(k);
+  list.insertItem(l);
+  list.insertItem(m);
+  list.insertItem(n);
+  list.insertItem(o);
+  list.insertItem(p);
+  list.insertItem(q);
   
-  list.printReverse();
-  
+  list.swapAlternate();
+  list.print();
 
 } //main
 
