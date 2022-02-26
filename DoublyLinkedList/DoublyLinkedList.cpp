@@ -227,6 +227,18 @@ void DoublyLinkedList<T>::swapAlternate() {
   } //while
 } //swapAlternate
 
+template<class T>
+bool DoublyLinkedList<T>::searchItem(T &item) {
+    NodeType<T>* temp = head;
+    while (temp->next != NULL) {
+        if (temp->data == item) {
+            return true;
+        }
+        temp = temp->next;
+    } // while
+    return false;
+} //searchItem
+
 template class DoublyLinkedList<int>;
 template class DoublyLinkedList<float>;
 template class DoublyLinkedList<std::string>;
