@@ -265,8 +265,7 @@ int main(int argc, char* argv[]) {
                     list.print();
                     cout << endl;
                 } else if (uinput == "q") {
-                    
-                    return 0;
+                    exit(0);
                 } else {
                     cout << "Invalid command, try again!" << endl;
                 } // read user input
