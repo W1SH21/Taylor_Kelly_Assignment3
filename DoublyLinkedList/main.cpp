@@ -77,6 +77,8 @@ int main(int argc, char* argv[]) {
                     cout << "Original List: ";
                     list.print();
                     cout << endl;
+		    low = list.findFirstIndex(low);
+		    up = list.findFirstIndex(up);
                     list.deleteSubsection(low, up);
                     cout << "Modified List: ";
                     list.print();

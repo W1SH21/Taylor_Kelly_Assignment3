@@ -30,6 +30,7 @@ public:
     T getMode(); // returns the mode (most common value) in the list
     void swapAlternate(); //exchanges every other node in the list with it's predacessor.
     bool searchItem(T &item); // searches the list for an item, returns true if it exists
+    int findFirstIndex(T &item);  
 }; //DoublyLinkedList<>
   
 #endif
