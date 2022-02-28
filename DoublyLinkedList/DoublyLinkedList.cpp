@@ -118,14 +118,11 @@ void DoublyLinkedList<T>::deleteSubsection(int lbound, int ubound) {
     for (int i = 0; i < lbound; i++) {
       lowerBound = lowerBound->next;
     } //for
-
-    cout << lowerBound->data << endl;;
       
     for (int i = length - 1; i > ubound; i--) {
       upperBound = upperBound->back;
     } //for
 
-    cout << upperBound->data << endl;
     
     if (lbound != 0 && ubound != length - 1) {
 
@@ -238,6 +235,25 @@ bool DoublyLinkedList<T>::searchItem(T &item) {
     } // while
     return false;
 } //searchItem
+
+template<class T>
+int DoublyLinkedList<T>::findFirstIndex(T &item) {
+  NodeType<T>* temp = head;
+  int i = 0;
+
+  if (item < head->data) {
+    i = 0;
+  } else if (item > tail->data) {
+    i = length - 1;
+  } else {
+    while (temp->next != NULL && temp->data < item) {
+      temp = temp->next;
+      i ++;
+    } //while
+  } //if
+    
+  return i; 
+} //findNode
 
 template class DoublyLinkedList<int>;
 template class DoublyLinkedList<float>;
