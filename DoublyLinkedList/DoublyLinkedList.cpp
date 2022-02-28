@@ -164,23 +164,35 @@ void DoublyLinkedList<T>::deleteSubsection(int lbound, int ubound) {
   } //if
 } //deleteSubsection
 
+/*
+ * This program reads through every item in a list one-by-one, and then compares it to every future
+ * item in the list one-by-one, checking to see if they are equal. If so, it adds to a counter
+ * that will be checked against the current highest appearance rate. If it is higher, then
+ * it sets that value as the mode. Otherwise, the mode is unchanged.
+ * This gives it a big O complextity of O(n^2).
+ */
 template<class T>
 T DoublyLinkedList<T>::getMode() {
   NodeType<T>* temp = head;
-  int appearances = 1;
+  NodeType<T>* temp2 = head;
+  int appearances = 0, currentMode = 0; 
   NodeType<T>* modeRef;
   
   while (temp->next != NULL) {
-
-    if (temp->data == temp->next->data) {
-      appearances++;
+      while (temp2 != NULL) {
+          if (temp->data == temp2->data) {
+              appearances++;
+          } // if
+          temp2 = temp2->next;
+      } // while
+      if (appearances > currentMode) {
+          currentMode = appearances;
+          modeRef = temp;
+      } // if
       temp = temp->next;
-    } else {
-      appearances = 1;
-      modeRef = temp->back;
-      temp = temp->next;
-    } //if
-  } //while
+      appearances = 0;
+      temp2 = temp;
+  } // while
 
   return modeRef->data;
 } //getMode
